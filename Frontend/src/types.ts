@@ -1,31 +1,34 @@
-export type FoodProduct = "Saffron" | "Vanilla" | "Cashews" | "Pistachios" | "A2 Desi Cow Milk";
+export type FoodProduct =
+  | "Saffron"
+  | "Vanilla"
+  | "Cashews"
+  | "Pistachios"
+  | "A2 Desi Cow Milk";
 
-export interface ModalResults {
-  visual: number;   // 0..1
-  spectral: number;
-  sensor: number;
-  fused: number;
-}
-
-export interface SpectralPoint {
-  wavelength: number;
-  pure: number;
-  sample: number;
+export interface ModalitiesUsed {
+  image: boolean;
+  spectral: boolean;
+  tabular: boolean;
 }
 
 export interface AnalysisResult {
   id: string;
   product: FoodProduct;
-  isAdulterated: boolean;
-  confidence: number;            // 0..1
-  adulterantType: string;        // e.g. "Synthetic dye", "None"
-  adulterationPct: number;       // 0..100
-  detectionTime: number;         // ms or seconds
-  timestamp: number;             // Date.now()
+
+  prediction: "Pure" | "Adulterated";
+  confidence: number; // 0..100 from backend
+
+  probabilities: {
+    Pure: number; // 0..100
+    Adulterated: number; // 0..100
+  };
+
+  modalities_used: ModalitiesUsed;
+  reliability: "Low" | "Medium" | "High";
+
+  timestamp: number;
   imageDataUrl?: string;
-  modalResults: ModalResults;
-  gradCamData: number[][];       // 14x14
-  attentionWeights: number[][];  // 14x14
-  spectralData: SpectralPoint[]; // 200 points
-  rawJson: Record<string, unknown>;
+
+  // Keep the raw backend response for the Details tab
+  rawJson?: Record<string, unknown>;
 }
