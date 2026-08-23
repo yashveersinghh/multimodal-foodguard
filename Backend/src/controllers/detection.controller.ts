@@ -21,12 +21,12 @@ export const detectFood = async (req: Request, res: Response) => {
 
     const pythonScript = path.resolve(
       process.cwd(),
-      "python/efficientnet/inference.py"
+      "python/cmafn/inference.py"
     );
 
     const modelPath = path.resolve(
       process.cwd(),
-      "models/efficientnet/best_model.pth"
+      "models/cmafn/cashews/best_model.pth"
     );
 
     execFile(
@@ -37,24 +37,29 @@ export const detectFood = async (req: Request, res: Response) => {
 
         if (error) {
           console.error("Python error:", stderr);
-
           return res.status(500).json({
             error: "Model inference failed",
           });
         }
 
         try {
-            const result = JSON.parse(stdout);
+          const result = JSON.parse(stdout);
 
-            return res.json({
-              prediction: result.prediction,
-              confidence: Number(result.confidence.toFixed(2)),
-              probabilities: {
-                Pure: Number(result.probabilities.Pure.toFixed(2)),
-                Adulterated: Number(result.probabilities.Adulterated.toFixed(2)),
-              },
-            });
+          return res.json({
+            prediction: result.prediction,
+            confidence: Number(result.confidence.toFixed(2)),
+            probabilities: {
+              Pure: Number(result.probabilities.Pure.toFixed(2)),
+              Adulterated: Number(
+                result.probabilities.Adulterated.toFixed(2)
+              ),
+            },
+            modalities_used: result.modalities_used,
+            reliability: result.reliability,
+          });
         } catch {
+          console.error("Invalid Python output:", stdout);
+
           return res.status(500).json({
             error: "Invalid response from model",
           });
