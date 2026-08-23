@@ -8,10 +8,10 @@ interface FooterProps {
 export function Footer({ onNavigate }: FooterProps) {
   return (
     <footer className="w-full bg-[#FAF8F5] mt-auto text-[#111111]">
-      <div className="max-w-6xl mx-auto px-6 py-8">
+      <div className="max-w-6xl mx-auto px-6 py-1">
         
         {/* Top Row: Brand & Navigation on Left | Icons on Right */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-3">
           
           <div className="space-y-3">
             {/* Logo */}

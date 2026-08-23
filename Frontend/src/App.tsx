@@ -61,7 +61,7 @@ function AppContent() {
         historyCount={history.length}
       />
 
-      <main className="flex-1 w-full flex flex-col pb-20 md:pb-0">
+      <main className="flex-1 w-full flex flex-col pb-0">
         {currentView === "dashboard" && (
           <Dashboard onStart={() => setCurrentView("analyzer")} />
         )}

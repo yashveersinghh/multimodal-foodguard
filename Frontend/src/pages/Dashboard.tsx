@@ -54,7 +54,7 @@ export function Dashboard({ onStart }: { onStart?: () => void }) {
           >
             <button
               onClick={onStart}
-              className="px-9 py-4 bg-[#E06D53] hover:bg-[#C95B42] text-white rounded-full font-medium text-base shadow-lg shadow-[#E06D53]/25 hover:shadow-xl hover:shadow-[#E06D53]/35 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer active:scale-98"
+              className="px-9 mb-7 py-4 bg-[#E06D53] hover:bg-[#C95B42] text-white rounded-full font-medium text-base shadow-lg shadow-[#E06D53]/25 hover:shadow-xl hover:shadow-[#E06D53]/35 transition-all duration-300 flex items-center gap-2.5 group cursor-pointer active:scale-98"
             >
               <span>Start Analyzer</span>
               <ArrowUpRight className="w-5 h-5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
