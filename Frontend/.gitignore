@@ -36,8 +36,6 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
-
-# System Files
 .DS_Store
 Thumbs.db
 
@@ -47,3 +45,8 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Environment files: keep only the committed template
+.env
+.env.*
+!.env.example
