@@ -26,7 +26,7 @@ import { Progress } from "@/components/ui/progress";
 
 import { FoodProduct, AnalysisResult } from "../types";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = (import.meta.env.VITE_API_URL ?? "").trim().replace(/\/+$/, "");
 
 const PRODUCTS: FoodProduct[] = [
   "Saffron",
@@ -208,7 +208,7 @@ export function Analyzer({ onComplete, onBack }: AnalyzerProps) {
 
     if (!API_URL) {
       setApiError(
-        "API URL is not configured. Check VITE_API_URL in .env.local."
+        "API URL is not configured. Set VITE_API_URL in Vercel project settings for production, or in Frontend/.env.local for local development."
       );
       return;
     }
@@ -294,8 +294,9 @@ export function Analyzer({ onComplete, onBack }: AnalyzerProps) {
       if (axios.isAxiosError(error)) {
         const message =
           error.response?.data?.error ||
-          error.message ||
-          "Failed to connect to the inference backend.";
+          (error.code === "ERR_NETWORK"
+            ? `Cannot reach the inference backend at ${API_URL || "(no API URL configured)"}. Check VITE_API_URL and confirm the backend deployment is available.`
+            : error.message || "Failed to connect to the inference backend.");
 
         setApiError(message);
       } else {
